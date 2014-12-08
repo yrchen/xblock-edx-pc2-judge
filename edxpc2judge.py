@@ -29,7 +29,7 @@ class EdxPc2JudgeBlock(XBlock):
         Returns a `Fragment` object specifying the HTML, CSS, and JavaScript
         to display.
         """
-        provider, embed_code = self.get_embed_code_for_url(self.href)
+        provider, embed_code = self.get_embed_code_for_url(self.problemname)
         
         # Load the HTML fragment from within the package and fill in the template
         html_str = pkg_resources.resource_string(__name__, "static/html/simplevideo.html")
