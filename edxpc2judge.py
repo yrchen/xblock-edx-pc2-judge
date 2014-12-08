@@ -22,31 +22,45 @@ class EdxPc2JudgeBlock(XBlock):
     watched = Integer(help="How many times the student has watched it?", default=0, scope=Scope.user_state)
 
     def student_view(self, context):
-        """
-        Create a fragment used to display the XBlock to a student.
-        `context` is a dictionary used to configure the display (unused)
-
-        Returns a `Fragment` object specifying the HTML, CSS, and JavaScript
-        to display.
-        """
-        provider, embed_code = self.get_embed_code_for_url(self.problemname)
-        
-        # Load the HTML fragment from within the package and fill in the template
-        html_str = pkg_resources.resource_string(__name__, "static/html/simplevideo.html")
-        frag = Fragment(unicode(html_str).format(self=self, embed_code=embed_code))
-
-        # Load CSS
-        css_str = pkg_resources.resource_string(__name__, "static/css/simplevideo.css")
-        frag.add_css(unicode(css_str))
-
-        # Load JS
-        if provider == 'vimeo.com':
-            js_str = pkg_resources.resource_string(__name__, "static/js/lib/froogaloop.min.js")
-            frag.add_javascript(unicode(js_str))
-            js_str = pkg_resources.resource_string(__name__, "static/js/src/simplevideo.js")
-            frag.add_javascript(unicode(js_str))
-            frag.initialize_js('SimpleVideoBlock')
-
+        HOST, PORT = "140.115.51.227", 9876
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #self.problemtext=3
+        studentid =str(self.runtime.anonymous_student_id)
+        self.edxid = studentid
+        sock.connect((HOST, PORT))
+        sock.sendall(studentid)
+        sock.close()
+        HOST2, PORT2 = "140.115.51.227", 9888
+        sock2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock2.connect((HOST2, PORT2))
+        sock2.sendall(studentid)
+        ok = sock2.recv(1024).strip()
+        sock2.sendall(str(self.problemtext))
+        choose = sock2.recv(1024).strip()
+        sock2.close()
+        html_str = pkg_resources.resource_string(__name__, "static/html/Pc2Judge.html")
+        frag = Fragment(unicode(html_str).format(edxid=self.edxid,problemtext=self.problemtext))
+        if(choose=="None"):
+        self.edxid = studentid
+        js_str = pkg_resources.resource_string(__name__, "static/src/js/Pc2Judge_1.js")
+        frag.add_javascript(unicode(js_str))
+        frag.initialize_js('Pc2JudgeBlock')
+        elif(choose=="YES"):
+        self.edxid = studentid
+        js_str = pkg_resources.resource_string(__name__, "static/src/js/Pc2Judge_2.js")
+        frag.add_javascript(unicode(js_str))
+        frag.initialize_js('Pc2JudgeBlock2')
+        elif(choose=="NO"):
+        self.edxid = studentid
+        js_str = pkg_resources.resource_string(__name__, "static/src/js/Pc2Judge_3.js")
+        frag.add_javascript(unicode(js_str))
+        frag.initialize_js('Pc2JudgeBlock3')
+        #html_str = pkg_resources.resource_string(__name__, "static/html/Pc2Judge2.html")
+        #sock.connect((HOST, PORT))
+        #sock.sendall(test)
+        #sock.sendall(test)
+        #sock.close()
+        #frag.initialize_js('Pc2JudgeBlock')
         return frag
 
     def studio_view(self, context):
