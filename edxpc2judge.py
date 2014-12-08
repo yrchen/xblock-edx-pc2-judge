@@ -25,7 +25,7 @@ class EdxPc2JudgeBlock(XBlock):
         HOST, PORT = "140.115.51.227", 9876
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.problemtext=3
-        studentid =str(self.runtime.anonymous_student_id)
+        studentid =str(self.xmodule_runtime.anonymous_student_id)
         self.edxid = studentid
         sock.connect((HOST, PORT))
         sock.sendall(studentid)
