@@ -41,20 +41,20 @@ class EdxPc2JudgeBlock(XBlock):
         html_str = pkg_resources.resource_string(__name__, "static/html/Pc2Judge.html")
         frag = Fragment(unicode(html_str).format(edxid=self.edxid,problemnumber=self.problemnumber))
         if(choose=="None"):
-        self.edxid = studentid
-        js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_1.js")
-        frag.add_javascript(unicode(js_str))
-        frag.initialize_js('Pc2JudgeBlock')
+            self.edxid = studentid
+            js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_1.js")
+            frag.add_javascript(unicode(js_str))
+            frag.initialize_js('Pc2JudgeBlock')
         elif(choose=="YES"):
-        self.edxid = studentid
-        js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_2.js")
-        frag.add_javascript(unicode(js_str))
-        frag.initialize_js('Pc2JudgeBlock2')
+            self.edxid = studentid
+            js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_2.js")
+            frag.add_javascript(unicode(js_str))
+            frag.initialize_js('Pc2JudgeBlock2')
         elif(choose=="NO"):
-        self.edxid = studentid
-        js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_3.js")
-        frag.add_javascript(unicode(js_str))
-        frag.initialize_js('Pc2JudgeBlock3')
+            self.edxid = studentid
+            js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_3.js")
+            frag.add_javascript(unicode(js_str))
+            frag.initialize_js('Pc2JudgeBlock3')
         #html_str = pkg_resources.resource_string(__name__, "static/html/Pc2Judge2.html")
         #sock.connect((HOST, PORT))
         #sock.sendall(test)
