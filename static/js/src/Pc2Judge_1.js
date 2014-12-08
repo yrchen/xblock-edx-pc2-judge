@@ -10,7 +10,7 @@ function Pc2JudgeBlock(runtime, element) {
  setCookie("problem", v2, 30);  
  
 document.getElementById("iframe1").src = "http://acnlab.openedx.tw/index.html?id="+v+"&problem="+v2;
-alert(getCookie("studentid"))
+//alert(getCookie("studentid"))
 //location.href ="http://acnlab.openedx.tw/pc2.html?id="+"ffff"; 
 //window.location="http://www.w3schools.com/"+"js/js_input_examples.asp"
 
