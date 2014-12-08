@@ -67,13 +67,13 @@ class EdxPc2JudgeBlock(XBlock):
         """
         Create a fragment used to display the edit view in the Studio.
         """
-        html_str = pkg_resources.resource_string(__name__, "static/html/simplevideo_edit.html")
+        html_str = pkg_resources.resource_string(__name__, "static/html/Pc2Judge_edit.html")
         problemname = self.problemname or ''
         frag = Fragment(unicode(html_str).format(problemname=problemname, problemnumber=self.problemnumber, allproblem=self.allproblem))
 
-        js_str = pkg_resources.resource_string(__name__, "static/js/src/simplevideo_edit.js")
+        js_str = pkg_resources.resource_string(__name__, "static/js/src/Pc2Judge_edit.js")
         frag.add_javascript(unicode(js_str))
-        frag.initialize_js('SimpleVideoEditBlock')
+        frag.initialize_js('Pc2JudgeEditBlock')
 
         return frag
 
