@@ -15,9 +15,9 @@ class EdxPc2JudgeBlock(XBlock):
     """
     An XBlock providing oEmbed capabilities for video (currently only supporting Vimeo)
     """
-
+    edxid = String(help="URL of the video page at the provider", default=None, scope=Scope.user_state)
     problemname = String(help="URL of the video page at the provider", default=None, scope=Scope.content)
-    problemnumber = Integer(help="Maximum width of the video", default=800, scope=Scope.content)
+    problemnumber = Integer(help="Maximum width of the video", default=1, scope=Scope.content)
     allproblem = Integer(help="Maximum height of the video", default=450, scope=Scope.content)
     watched = Integer(help="How many times the student has watched it?", default=0, scope=Scope.user_state)
 
@@ -35,24 +35,24 @@ class EdxPc2JudgeBlock(XBlock):
         sock2.connect((HOST2, PORT2))
         sock2.sendall(studentid)
         ok = sock2.recv(1024).strip()
-        sock2.sendall(str(self.problemtext))
+        sock2.sendall(str(self.problemnumber))
         choose = sock2.recv(1024).strip()
         sock2.close()
         html_str = pkg_resources.resource_string(__name__, "static/html/Pc2Judge.html")
-        frag = Fragment(unicode(html_str).format(edxid=self.edxid,problemtext=self.problemtext))
+        frag = Fragment(unicode(html_str).format(edxid=self.edxid,problemnumber=self.problemnumber))
         if(choose=="None"):
         self.edxid = studentid
-        js_str = pkg_resources.resource_string(__name__, "static/src/js/Pc2Judge_1.js")
+        js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_1.js")
         frag.add_javascript(unicode(js_str))
         frag.initialize_js('Pc2JudgeBlock')
         elif(choose=="YES"):
         self.edxid = studentid
-        js_str = pkg_resources.resource_string(__name__, "static/src/js/Pc2Judge_2.js")
+        js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_2.js")
         frag.add_javascript(unicode(js_str))
         frag.initialize_js('Pc2JudgeBlock2')
         elif(choose=="NO"):
         self.edxid = studentid
-        js_str = pkg_resources.resource_string(__name__, "static/src/js/Pc2Judge_3.js")
+        js_str = pkg_resources.resource_string(__name__, "static/js/src//Pc2Judge_3.js")
         frag.add_javascript(unicode(js_str))
         frag.initialize_js('Pc2JudgeBlock3')
         #html_str = pkg_resources.resource_string(__name__, "static/html/Pc2Judge2.html")
